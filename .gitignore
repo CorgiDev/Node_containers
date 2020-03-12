@@ -1,0 +1,8 @@
+# ARTIFACTS
+*.gz
+*.tar.gz
+*.tar.xz
+*.asc
+*.rpm
+node-v13.10.1
+node-v12.16.1
