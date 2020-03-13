@@ -17,6 +17,9 @@ This container is meant to act as a base. As a result, resource requirements wil
 
 ## Vendor Documentation
 - [Node.js 13.X LTS Documentation](https://nodejs.org/docs/latest-v13.x/api/modules.html)
+- [NPM Documentation](https://docs.npmjs.com/)
+- [npm update documentation](https://docs.npmjs.com/cli-commands/update.html)
+  - I recommend looking over this because there are some different ways to use the `npm update` command that affect what it updates and how.
 
 ## Note
 - No user account is included in this container to avoid conflicts with downstream applications that run on top of it. As a result,it will be dependent on downstream containers to avoid running as root.

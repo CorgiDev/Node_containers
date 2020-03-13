@@ -13,15 +13,16 @@ LABEL name="Node" \
       description="This NodeJS image intended to act as a base for building and running NodeJS applications."
 
 ARG NODE_RELEASE=12
-ARG INSTALL_PKGS="nodejs npm nodejs-nodemon nss_wrapper"
+ARG INSTALL_PKGS="python3 nodejs npm nodejs-nodemon nss_wrapper"
 
 WORKDIR /opt
 
 RUN set -ex && \
     yum update -y --nogpgcheck && \
-    yum -y module enable nodejs:$NODE_RELEASE && \
     yum remove -y $INSTALL_PKGS && \
+    yum -y module enable nodejs:$NODE_RELEASE && \
     yum install -y --nogpgcheck --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    npm update && \
     yum -y clean all && \
     node --version && \
     npm --version && \
@@ -34,5 +35,3 @@ COPY LICENSE /licenses/nodejs
 EXPOSE 8080
 
 CMD ["node"]
-
-HEALTHCHECK --timeout=30s CMD which node || exit 1s

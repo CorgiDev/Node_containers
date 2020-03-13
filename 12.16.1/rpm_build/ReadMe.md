@@ -14,3 +14,6 @@ You can also swap out the *--name* for something other than nodejs if needed.
 
 ## Node.js Official Documentation
 - [Node.js 12.X LTS Documentation](https://nodejs.org/docs/latest-v12.x/api/modules.html)
+- [NPM Documentation](https://docs.npmjs.com/)
+- [npm update documentation](https://docs.npmjs.com/cli-commands/update.html)
+  - I recommend looking over this because there are some different ways to use the `npm update` command that affect what it updates and how.

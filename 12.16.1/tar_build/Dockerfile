@@ -15,17 +15,20 @@ LABEL name="Node" \
 ARG NODE_VERSION=12.16.1
 ARG NODE_TARBALL=node-v${NODE_VERSION}.tar.gz
 ARG NODE_SHA256=4fe8c3454f9bee5bbe72d44aa25cd931859b3037b7a9473081b3b2bd1b465b95
+ARG COMPILE_DWNLD_PKGS="python2 gcc-c++ wget make"
+ARG POST_INSTALL_PKGS="nodejs-nodemon nss_wrapper"
+
 
 COPY LICENSE /licenses/nodejs
 
 WORKDIR /opt
 
-# Need to add in a sha256 check and the download of the tar
+# Need to add in a sha256 check
 RUN set -ex && \
     yum update -y --nogpgcheck && \
-    yum -y clean all && \
-    yum install --nogpgcheck -y python3 gcc-c++ make && \
-    wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}.tar.gz && \
+    yum remove -y $INSTALL_PKGS && \
+    yum install --nogpgcheck -y ${COMPILE_DWNLD_PKGS} && \
+    wget https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TARBALL} -O /opt/${NODE_TARBALL} && \
     tar -zxf ./${NODE_TARBALL} && rm -fv ./${NODE_TARBALL} && \
     cd node-v${NODE_VERSION} && \
     ./configure && \
@@ -35,8 +38,8 @@ RUN set -ex && \
     rm -Rf node-v${NODE_VERSION} && \
     rm -Rf ${NODE_TARBALL} && \
     rm -rfv /opt/* /var/cache/yum && \
-    yum remove -y $INSTALL_PKGS && \
-    yum install -nogpgcheck nodejs-nodemon nss_wrapper --setopt=tsflags=nodocs -y && \
+    yum install -nogpgcheck ${POST_INSTALL_PKGS} --setopt=tsflags=nodocs -y && \
+    npm update && \
     yum clean all && \
     node --version && \
     npm --version && \
@@ -47,5 +50,3 @@ RUN set -ex && \
 EXPOSE 8080
 
 CMD ["node"]
-
-HEALTHCHECK --timeout=30s CMD which node || exit 1
