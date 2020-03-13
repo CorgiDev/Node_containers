@@ -27,8 +27,9 @@ RUN set -ex && \
     yum update -y --nogpgcheck && \
     yum -y clean all && \
     yum remove -y $INSTALL_PKGS && \
-    yum install --nogpgcheck -y python2 gcc-c++ wget make && \
-    wget https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TARBALL} -O /opt/${NODE_TARBALL} && \
+    yum install --nogpgcheck -y python3 gcc-c++ wget make && \
+    wget -q -O ${NODE_TARBALL} https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TARBALL} && \
+    echo "${NODE_SHA256} *${NODE_TARBALL}" | sha256sum -c - && \
     tar -zxf ./${NODE_TARBALL} && rm -fv ./${NODE_TARBALL} && \
     cd node-v${NODE_VERSION} && \
     ./configure && \

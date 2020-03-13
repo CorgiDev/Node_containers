@@ -28,7 +28,8 @@ RUN set -ex && \
     yum update -y --nogpgcheck && \
     yum remove -y $INSTALL_PKGS && \
     yum install --nogpgcheck -y ${COMPILE_DWNLD_PKGS} && \
-    wget https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TARBALL} -O /opt/${NODE_TARBALL} && \
+    wget -q -O ${NODE_TARBALL} https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TARBALL} && \
+    echo "${NODE_SHA256} *${NODE_TARBALL}" | sha256sum -c - && \
     tar -zxf ./${NODE_TARBALL} && rm -fv ./${NODE_TARBALL} && \
     cd node-v${NODE_VERSION} && \
     ./configure && \
@@ -38,7 +39,7 @@ RUN set -ex && \
     rm -Rf node-v${NODE_VERSION} && \
     rm -Rf ${NODE_TARBALL} && \
     rm -rfv /opt/* /var/cache/yum && \
-    yum install -nogpgcheck ${POST_INSTALL_PKGS} --setopt=tsflags=nodocs -y && \
+    yum install -nogpgcheck ${POST_INSTALL_PKGS} -y && \
     npm update && \
     yum clean all && \
     node --version && \
