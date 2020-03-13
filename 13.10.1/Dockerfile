@@ -22,7 +22,6 @@ COPY LICENSE /licenses/nodejs
 
 WORKDIR /opt
 
-# Need to add in a sha256 check
 RUN set -ex && \
     yum update -y --nogpgcheck && \
     yum -y clean all && \
