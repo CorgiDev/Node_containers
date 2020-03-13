@@ -39,7 +39,7 @@ RUN set -ex && \
     rm -Rf node-v${NODE_VERSION} && \
     rm -Rf ${NODE_TARBALL} && \
     rm -rfv /opt/* /var/cache/yum && \
-    yum install -nogpgcheck nodejs-nodemon nss_wrapper --setopt=tsflags=nodocs -y && \
+    yum install --nogpgcheck nodejs-nodemon nss_wrapper --setopt=tsflags=nodocs -y && \
     npm update && \
     yum clean all && \
     node --version && \

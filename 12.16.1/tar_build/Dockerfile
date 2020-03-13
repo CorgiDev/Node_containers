@@ -39,7 +39,7 @@ RUN set -ex && \
     rm -Rf node-v${NODE_VERSION} && \
     rm -Rf ${NODE_TARBALL} && \
     rm -rfv /opt/* /var/cache/yum && \
-    yum install -nogpgcheck ${POST_INSTALL_PKGS} -y && \
+    yum install --nogpgcheck ${POST_INSTALL_PKGS} -y && \
     npm update && \
     yum clean all && \
     node --version && \
